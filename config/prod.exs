@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :apple_stock, AppleStock.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: {:system, "URL_HOST"}, path: {:system, "URL_PATH"}, port: {:system, "URL_PORT"}],
+  url: [host: {:system, "URL_HOST"}, path: System.get_env("URL_PATH"), port: {:system, "URL_PORT"}],
   cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production
