@@ -1,0 +1,28 @@
+<h2><%= @dashboard.description %></h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th> Store</th>
+      <%= for p <- @dashboard.parts do %>
+      <th class="text-center"><%= p.description %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for store <- @availability["stores"] do %>
+    <tr>
+      <td><%= store["storeName"] %></td>
+      <%= for p <- @dashboard.parts do %>
+      <% partname = p.number %>
+      <td class="text-center">
+        <%= if store["partsAvailability"][partname]["pickupDisplay"] == "available" do %>
+          <span class="label label-success">Available</span>
+        <% else %>
+          <span class="label label-danger">No</span>
+        <% end %>
+      </td>
+      <% end %>
+    </tr>
+    <% end %>
+
+</table>

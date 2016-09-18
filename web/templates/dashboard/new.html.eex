@@ -1,0 +1,6 @@
+<h2>New dashboard</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: dashboard_path(@conn, :create) %>
+
+<%= link "Back", to: dashboard_path(@conn, :index) %>

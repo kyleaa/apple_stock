@@ -1,0 +1,26 @@
+<h2>Listing dashboards</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for dashboard <- @dashboards do %>
+    <tr>
+      <td><%= dashboard.description %></td>
+
+      <td class="text-right">
+        <%= link "View", to: dashboard_path(@conn, :show, dashboard), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: dashboard_path(@conn, :edit, dashboard), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: dashboard_path(@conn, :delete, dashboard), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New dashboard", to: dashboard_path(@conn, :new) %>

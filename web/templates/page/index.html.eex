@@ -1,0 +1,5 @@
+<ul>
+<%= for dashboard <- @dashboards do %>
+    <li><%= link dashboard.description, to: dashboard_path(@conn, :show, dashboard) %></li>
+<% end %>
+</ul>

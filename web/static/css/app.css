@@ -1,0 +1,10 @@
+/* This file is for your main application css. */
+header {
+  font-size: 30px;
+  font-family: -apple-system, Helvetica, Arial, sans-serif;
+}
+
+header a, header a:hover {
+  text-decoration: none;
+  color: black;
+}
