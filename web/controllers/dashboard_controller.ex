@@ -29,13 +29,16 @@ defmodule AppleStock.DashboardController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+
+  def show(conn, %{"id" => id, "zip" => zip}) do
     dashboard = Repo.get!(Dashboard, id)
     |> Repo.preload(:parts)
-    availability = fetch_availability(dashboard.parts)
+    availability = fetch_availability(dashboard.parts, zip)
     Logger.debug "#{inspect availability}"
     render(conn, "show.html", dashboard: dashboard, availability: availability)
   end
+
+  def show(conn, %{"id" => id}), do: show(conn, %{"id" => id, "zip" => "14094"})
 
   def edit(conn, %{"id" => id}) do
     dashboard = Repo.get!(Dashboard, id)
@@ -69,12 +72,12 @@ defmodule AppleStock.DashboardController do
     |> redirect(to: dashboard_path(conn, :index))
   end
 
-  def fetch_availability(parts) do
+  def fetch_availability(parts, zip) do
     parts = parts
     |> Enum.with_index
     |> Enum.map(fn {map, i} -> Map.get(map, :number) |> part_url_param(i) end)
     |> Enum.join("&")
-    url = "http://www.apple.com/shop/retail/pickup-message?location=14094&#{parts}"
+    url = "http://www.apple.com/shop/retail/pickup-message?location=#{zip}&#{parts}"
     Logger.debug "url: #{url}"
     HTTPoison.get!(url)
     |> extract_struct_body
