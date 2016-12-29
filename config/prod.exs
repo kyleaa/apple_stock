@@ -32,3 +32,7 @@ config :apple_stock, AppleStock.Repo,
 
 config :apple_stock, AppleStock.Endpoint,
   secret_key_base: System.get_env("APPLE_STOCK_KEY_BASE")
+
+config :quantum, cron: [
+  "*/2 * * * *": {AppleStock.AlarmEngine, :process_alarms}
+]
