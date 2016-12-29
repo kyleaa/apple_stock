@@ -11,9 +11,11 @@ defmodule AppleStock.Router do
 
   scope "/", AppleStock do
     pipe_through :browser # Use the default browser stack
+    get "/admin", AdminLandingController, :show
     resources "/admin/parts/", PartController
     resources "/admin/dashboards/", DashboardController, except: [:show]
-    
+    resources "/admin/alarms", AlarmController
+
     get "/", PageController, :index
     get "/:id", DashboardController, :show
     get "/:id/:zip", DashboardController, :show

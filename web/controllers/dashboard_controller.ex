@@ -1,7 +1,6 @@
 defmodule AppleStock.DashboardController do
   use AppleStock.Web, :controller
   alias AppleStock.{Repo}
-  alias Poison, as: JSON
   require Logger
 
   alias AppleStock.Dashboard
@@ -33,8 +32,7 @@ defmodule AppleStock.DashboardController do
   def show(conn, %{"id" => id, "zip" => zip}) do
     dashboard = Repo.get!(Dashboard, id)
     |> Repo.preload(:parts)
-    availability = fetch_availability(dashboard.parts, zip)
-    Logger.debug "#{inspect availability}"
+    availability = AppleStock.Availability.fetch_availability(dashboard.parts, zip)
     render(conn, "show.html", dashboard: dashboard, availability: availability)
   end
 
@@ -71,21 +69,4 @@ defmodule AppleStock.DashboardController do
     |> put_flash(:info, "Dashboard deleted successfully.")
     |> redirect(to: dashboard_path(conn, :index))
   end
-
-  def fetch_availability(parts, zip) do
-    parts = parts
-    |> Enum.with_index
-    |> Enum.map(fn {map, i} -> Map.get(map, :number) |> part_url_param(i) end)
-    |> Enum.join("&")
-    url = "http://www.apple.com/shop/retail/pickup-message?location=#{zip}&#{parts}"
-    Logger.debug "url: #{url}"
-    HTTPoison.get!(url)
-    |> extract_struct_body
-    |> JSON.decode!
-    |> extract_body
-  end
-
-  defp part_url_param(n, i), do: "parts.#{i}=#{n}"
-  def extract_body(m) when is_map(m), do: m |> Map.get("body")
-  def extract_struct_body(s), do: s.body
 end

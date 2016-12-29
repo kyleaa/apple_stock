@@ -1,0 +1,6 @@
+<h2>Admin</h2>
+<ul>
+  <li><%= link "Dashboards", to: dashboard_path(@conn, :index) %></li>
+  <li><%= link "Parts", to: part_path(@conn, :index) %></li>
+  <li><%= link "Alarms", to: alarm_path(@conn, :index) %></li>
+</ul>

@@ -8,18 +8,17 @@ defmodule AppleStock do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Start the Ecto repository
       supervisor(AppleStock.Repo, []),
-      # Start the endpoint when the application starts
       supervisor(AppleStock.Endpoint, []),
-      # Start your own worker by calling: AppleStock.Worker.start_link(arg1, arg2, arg3)
-      # worker(AppleStock.Worker, [arg1, arg2, arg3]),
+      worker(Cachex, [:alarm_cache, []])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: AppleStock.Supervisor]
-    Supervisor.start_link(children, opts)
+    resp = Supervisor.start_link(children, opts)
+    AppleStock.AlarmEngine.register_all_alarms
+    resp
   end
 
   # Tell Phoenix to update the endpoint configuration

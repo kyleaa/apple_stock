@@ -9,6 +9,10 @@ use Mix.Config
 config :apple_stock,
   ecto_repos: [AppleStock.Repo]
 
+
+config :apple_stock, AppleStock.AlarmEngine,
+  target_arn: System.get_env("APPLE_STOCK_ALARM_ARN")
+
 # Configures the endpoint
 config :apple_stock, AppleStock.Endpoint,
   url: [host: "localhost"],

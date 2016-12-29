@@ -1,0 +1,28 @@
+<h2>Show alarm</h2>
+
+<ul>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @alarm.description %>
+  </li>
+
+  <li>
+    <strong>Part:</strong>
+    <%= @alarm.part_id %>
+  </li>
+
+  <li>
+    <strong>Store number:</strong>
+    <%= @alarm.store_number %>
+  </li>
+
+  <li>
+    <strong>Postal code:</strong>
+    <%= @alarm.postal_code %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: alarm_path(@conn, :edit, @alarm) %>
+<%= link "Back", to: alarm_path(@conn, :index) %>

@@ -1,0 +1,30 @@
+<h2>Listing alarms</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Store number</th>
+      <th>Postal code</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for alarm <- @alarms do %>
+    <tr>
+      <td><%= alarm.part_id %></td>
+      <td><%= alarm.store_number %></td>
+      <td><%= alarm.postal_code %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: alarm_path(@conn, :show, alarm), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: alarm_path(@conn, :edit, alarm), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: alarm_path(@conn, :delete, alarm), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New alarm", to: alarm_path(@conn, :new) %>

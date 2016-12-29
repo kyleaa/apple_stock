@@ -1,0 +1,6 @@
+<h2>Edit alarm</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: alarm_path(@conn, :update, @alarm) %>
+
+<%= link "Back", to: alarm_path(@conn, :index) %>

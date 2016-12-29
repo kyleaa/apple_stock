@@ -15,7 +15,7 @@
       <%= for p <- @dashboard.parts do %>
       <% partname = p.number %>
       <td class="text-center">
-        <%= if store["partsAvailability"][partname]["pickupDisplay"] == "available" do %>
+        <%= if AppleStock.Availability.available?(store, partname) do %>
           <span class="label label-success">Available</span>
         <% else %>
           <span class="label label-danger">No</span>

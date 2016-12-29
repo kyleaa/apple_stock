@@ -19,7 +19,7 @@ defmodule AppleStock.Mixfile do
   def application do
     [mod: {AppleStock, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpoison, :poison]]
+                    :phoenix_ecto, :postgrex, :httpoison, :poison, :ex_aws, :quantum, :cachex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +39,12 @@ defmodule AppleStock.Mixfile do
      {:gettext, "~> 0.11"},
      {:httpoison, "~> 0.9.0"},
      {:poison, "~> 2.0"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:ex_aws, "~> 1.0"},
+     {:quantum, "~> 1.8.1"},
+     {:hackney, "~> 1.6.1", override: true},
+     {:cachex, "~> 2.0"}
+   ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
